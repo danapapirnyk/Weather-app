@@ -1,4 +1,4 @@
-function formatDate(date) {
+function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
   if (hours < 10) {
@@ -9,7 +9,6 @@ function formatDate(date) {
     minutes = `0${minutes}`;
   }
 
-  let dayIndex = date.getDay();
   let days = [
     "Sunday",
     "Monday",
@@ -19,8 +18,7 @@ function formatDate(date) {
     "Friday",
     "Saturday",
   ];
-  let day = days[dayIndex];
-
+  let day = days[date.getDay()];
   return `${day} ${hours}:${minutes}`;
 }
 
@@ -30,12 +28,10 @@ function formatDay(timestamp) {
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return days[day];
-
 }
 
 function displayForecast(response) {
   let forecast = response.data.daily;
-
 
   let forecastElement = document.querySelector("#forecast");
 
@@ -44,14 +40,17 @@ function displayForecast(response) {
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
     if (index < 6) {
-
-    forecastHTML =
-      forecastHTML +
-      `
+      forecastHTML =
+        forecastHTML +
+        `
          <div class="col-2">
-               <div class="weather-forecast-date">${formatDat(forecastDay.dt)}</div>
+               <div class="weather-forecast-date">${formatDat(
+                 forecastDay.dt
+               )}</div>
                 <img 
-                src="http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png" 
+                src="http://openweathermap.org/img/wn/${
+                  forecastDay.weather[0].icon
+                }@2x.png" 
                 alt="" 
                 width="42"
                 />
@@ -65,7 +64,7 @@ function displayForecast(response) {
                 </div>
              </div>
   `;
-  }
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -145,6 +144,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("New York");
-
-
-
